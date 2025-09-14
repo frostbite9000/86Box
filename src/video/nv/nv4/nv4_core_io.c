@@ -656,6 +656,27 @@ void nv4_pci_write(int32_t func, int32_t addr, uint8_t val, void* priv)
     }
 }
 
+
+void nv4_speed_changed(void* priv)
+{
+    // sanity check
+    if (!nv4)
+        return; 
+        
+    nv4_recalc_timings(&nv4->nvbase.svga);
+}
+
+// Force Redraw
+// Reset etc.
+void nv4_force_redraw(void* priv)
+{
+    // sanity check
+    if (!nv4)
+        return; 
+
+    nv4->nvbase.svga.fullchange = changeframecount; 
+}
+
 // CHECK that ramin is the smae as nv4
 
 // Read 8-bit ramin
