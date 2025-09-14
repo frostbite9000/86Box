@@ -189,7 +189,7 @@ void nv4_update_mappings(void)
 }
 
 
-bool nv4_init()
+bool nv4_init(void)
 {
     nv4 = calloc(1, sizeof(nv4_t));
  

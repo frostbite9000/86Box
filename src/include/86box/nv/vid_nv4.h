@@ -88,7 +88,7 @@ extern nv4_t* nv4;                                                      // Alloc
 //
 
 // Device Core
-bool        nv4_init();
+bool        nv4_init(void);
 
 void*       nv4_init_stb4400(const device_t* info);
 
@@ -125,4 +125,4 @@ void        nv4_pci_write(int32_t func, int32_t addr, uint8_t val, void* priv);
 uint8_t     nv4_svga_read(uint16_t addr, void* priv);
 void        nv4_svga_write(uint16_t addr, uint8_t val, void* priv);
 
-void        nv4_update_mappings();
+void        nv4_update_mappings(void);
