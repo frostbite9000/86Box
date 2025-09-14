@@ -81,7 +81,8 @@ enum {
     CPU_CYRIX3S,
     CPU_PENTIUMPRO, /* 686 class CPUs */
     CPU_PENTIUM2,
-    CPU_PENTIUM2D
+    CPU_PENTIUM2D,
+    CPU_PENTIUM3
 };
 
 enum {
@@ -150,11 +151,11 @@ typedef struct cpu_t {
     uint32_t    cpuid_model;
     uint16_t    cyrix_id;
     uint8_t     cpu_flags;
-    int8_t      mem_read_cycles;
-    int8_t      mem_write_cycles;
-    int8_t      cache_read_cycles;
-    int8_t      cache_write_cycles;
-    int8_t      atclk_div;
+    uint16_t    mem_read_cycles;
+    uint16_t    mem_write_cycles;
+    uint16_t    cache_read_cycles;
+    uint16_t    cache_write_cycles;
+    uint16_t    atclk_div;
 } CPU;
 
 typedef struct {
@@ -186,16 +187,17 @@ typedef struct {
 #define EM_FLAG    0x00004 /* in CR0 */
 #define WP_FLAG    0x10000 /* in CR0 */
 
-#define CR4_VME    (1 << 0) /* Virtual 8086 Mode Extensions */
-#define CR4_PVI    (1 << 1) /* Protected-mode Virtual Interrupts */
-#define CR4_TSD    (1 << 2) /* Time Stamp Disable */
-#define CR4_DE     (1 << 3) /* Debugging Extensions */
-#define CR4_PSE    (1 << 4) /* Page Size Extension */
-#define CR4_PAE    (1 << 5) /* Physical Address Extension */
-#define CR4_MCE    (1 << 6) /* Machine Check Exception */
-#define CR4_PGE    (1 << 7) /* Page Global Enabled */
-#define CR4_PCE    (1 << 8) /* Performance-Monitoring Counter enable */
-#define CR4_OSFXSR (1 << 9) /* Operating system support for FXSAVE and FXRSTOR instructions */
+#define CR4_VME        (1 << 0) /* Virtual 8086 Mode Extensions */
+#define CR4_PVI        (1 << 1) /* Protected-mode Virtual Interrupts */
+#define CR4_TSD        (1 << 2) /* Time Stamp Disable */
+#define CR4_DE         (1 << 3) /* Debugging Extensions */
+#define CR4_PSE        (1 << 4) /* Page Size Extension */
+#define CR4_PAE        (1 << 5) /* Physical Address Extension */
+#define CR4_MCE        (1 << 6) /* Machine Check Exception */
+#define CR4_PGE        (1 << 7) /* Page Global Enabled */
+#define CR4_PCE        (1 << 8) /* Performance-Monitoring Counter enable */
+#define CR4_OSFXSR     (1 << 9) /* Operating system support for FXSAVE and FXRSTOR instructions */
+#define CR4_OSXMMEXCPT (1 << 10) /* Operating system support for unmasked SIMD floating-point exceptions */
 
 #define CPL        ((cpu_state.seg_cs.access >> 5) & 3)
 
@@ -234,6 +236,19 @@ typedef union {
     int8_t   sb[8];
     float    f[2];
 } MMX_REG;
+
+typedef union {
+    uint64_t q[2];
+    int64_t  sq[2];
+    uint32_t l[4];
+    int32_t  sl[4];
+    uint16_t w[8];
+    int16_t  sw[8];
+    uint8_t  b[16];
+    int8_t   sb[16];
+    float    f[4];
+    double   d[2];
+} SSE_REG;
 
 typedef struct {
     /* IBM 386SLC/486SLC/486BL MSRs */
@@ -423,6 +438,8 @@ typedef struct {
 #define in_smm   cpu_state._in_smm
 #define smi_line cpu_state._smi_line
 
+extern int sse_xmm;
+
 #define smbase   cpu_state._smbase
 
 /*The cpu_state.flags below must match in both cpu_cur_status and block->status for a block
@@ -549,6 +566,7 @@ extern int hasfpu;
 #define CPU_FEATURE_SYSCALL (1 << 7)
 #define CPU_FEATURE_3DNOWE  (1 << 8)
 #define CPU_FEATURE_PSE36   (1 << 9)
+#define CPU_FEATURE_SSE     (1 << 10)
 
 extern uint32_t cpu_features;
 
@@ -587,6 +605,8 @@ extern uint16_t temp_seg_data[4];
 extern uint16_t cs_msr;
 extern uint32_t esp_msr;
 extern uint32_t eip_msr;
+extern SSE_REG  XMM[8];
+extern uint32_t mxcsr;
 
 /* For the AMD K6. */
 extern uint64_t amd_efer;
