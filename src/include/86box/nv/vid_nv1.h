@@ -159,7 +159,7 @@ typedef struct nv1_s
 } nv1_t;
 
 // Device Core
-void        nv1_init();
+void        nv1_init(void);
 void        nv1_close(void* priv);
 void        nv1_speed_changed(void *priv);
 void        nv1_draw_cursor(svga_t* svga, int32_t drawline);

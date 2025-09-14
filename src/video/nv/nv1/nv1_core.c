@@ -28,7 +28,7 @@
 #include <86box/nv/vid_nv1.h>
 
 
-void nv1_init()
+void nv1_init(void)
 {
 
 }
