@@ -235,7 +235,7 @@ bool nv4_init(void)
     video_inform(VIDEO_FLAG_TYPE_SPECIAL, &timing_nv4_agp);
 
     nv4_init_mappings();
-    //nv4_update_mappings();
+    nv4_update_mappings();
 
     return true; 
 }
@@ -254,17 +254,6 @@ void nv4_close(void* priv)
 {
     free(nv4);
 }
-
-void nv4_speed_changed(void *priv)
-{
-
-}
-
-void nv4_draw_cursor(svga_t* svga, int32_t drawline)
-{
-
-}
-
 
 //
 // SVGA functions

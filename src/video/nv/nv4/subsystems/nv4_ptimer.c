@@ -28,7 +28,7 @@
 #include <86box/nv/vid_nv.h>
 #include <86box/nv/vid_nv4.h>
 
-nv_register_t ptimer_registers[] = {
+nv_register_t nv4_ptimer_registers[] = {
     { NV4_PTIMER_INTR, "NV4 PTIMER - Interrupt Status", NULL, NULL},
     { NV4_PTIMER_INTR_EN, "NV4 PTIMER - Interrupt Enable", NULL, NULL,},
     { NV4_PTIMER_NUMERATOR, "NV4 PTIMER - Numerator", NULL, NULL, },
