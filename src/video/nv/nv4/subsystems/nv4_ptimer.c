@@ -91,7 +91,7 @@ uint32_t nv4_ptimer_read(uint32_t address)
 { 
     // always enabled
 
-    nv_register_t* reg = nv_get_register(address, ptimer_registers, sizeof(ptimer_registers)/sizeof(ptimer_registers[0]));
+    nv_register_t* reg = nv_get_register(address, nv4_ptimer_registers, sizeof(nv4_ptimer_registers)/sizeof(nv4_ptimer_registers[0]));
 
     // Only log these when tehy actually tick
     if (address != NV4_PTIMER_TIME_0_NSEC
@@ -163,7 +163,7 @@ uint32_t nv4_ptimer_read(uint32_t address)
 void nv4_ptimer_write(uint32_t address, uint32_t value) 
 {
     // before doing anything, check the subsystem enablement
-    nv_register_t* reg = nv_get_register(address, ptimer_registers, sizeof(ptimer_registers)/sizeof(ptimer_registers[0]));
+    nv_register_t* reg = nv_get_register(address, nv4_ptimer_registers, sizeof(nv4_ptimer_registers)/sizeof(nv4_ptimer_registers[0]));
 
     nv_log_verbose_only("PTIMER Write 0x%08x -> 0x%08x", value, address);
 
